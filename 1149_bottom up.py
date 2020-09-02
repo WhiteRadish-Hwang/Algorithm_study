@@ -8,13 +8,12 @@ dp = dict()
 def key(row, col):
     return str(row) + ":" + str(col)
 
-for i in range(n+1):
-    for j in range(3):
-        dp[key(i, j)] = 0
-for row in range(n):
-        dp[key(row+1, 0)] = cost[row][0] + min(dp[key(row, 1)], dp[key(row, 2)])
+for j in range(3):
+    dp[key(0, j)] = cost[0][j]
+for row in range(1, n):
+        dp[key(row, 0)] = cost[row][0] + min(dp[key(row-1, 1)], dp[key(row-1, 2)])
 
-        dp[key(row+1, 1)] = cost[row][1] + min(dp[key(row, 0)], dp[key(row, 2)])
+        dp[key(row, 1)] = cost[row][1] + min(dp[key(row-1, 0)], dp[key(row-1, 2)])
 
-        dp[key(row+1, 2)] = cost[row][2] + min(dp[key(row, 0)], dp[key(row, 1)])
-print(min(dp[key(row+1,0)], dp[key(row+1,1)], dp[key(row+1,2)]))
+        dp[key(row, 2)] = cost[row][2] + min(dp[key(row-1, 0)], dp[key(row-1, 1)])
+print(min(dp[key(row,0)], dp[key(row,1)], dp[key(row,2)]))
